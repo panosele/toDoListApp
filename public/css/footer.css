@@ -1,0 +1,9 @@
+.footer {
+    /* background-color: aqua; */
+    margin: 0;
+    padding: 0;
+    min-height: 160px;
+    text-align: center;
+    background-color: rgb(76, 160, 118);
+    width: 100%;
+}

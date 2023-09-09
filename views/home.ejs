@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TO DO List</title>
+   <!-- Bootstrap CSS -->  
+  <%- include('./partials/links.ejs') %>
+</head>
+<body>
+    <div id="backgroundImage">
+
+    </div>
+
+    <%- include('./partials/navbar.ejs') %>
+
+<div id="container">
+<div id="listsContainer">
+  
+  <% content.forEach((list)=>{ %>
+    <a href="/:<%= list %>"><%= list %></a>
+    
+    <form action="/delete/list" id="contactform" class="form" method="POST">
+      <input class="hiddenInput" type="text" name="deleteList" value="<%= list %>"/>
+      <button style="background-color: rgb(42, 192, 62); margin-bottom: 10px;">☑</button>
+    </form>
+  <% }) %>
+  <a id="import-new-list" href="/create/newList">+</a>
+</div>
+
+</div>
+
+
+<%- include('./partials/footer.ejs') %>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<%- include('./partials/scripts.ejs') %>
