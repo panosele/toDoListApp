@@ -1,0 +1,21 @@
+<%- include('./partials/links.ejs') %>
+<%- include('./partials/navbar.ejs') %>
+
+
+<h1>CREATE A NEW TASK</h1>
+
+    <% if (locals.content) { %>
+      <h2> <%= content.toUpperCase() %></h2>
+      <form action="/<%= content %>/create/newTask" id="newList" class="form newListForm" method="POST">
+        <label class="child">Task:</label>
+      <input class="listName child" type="text" placeholder="Task" name="task" maxlength="100"  required/>
+      <button class="buttonNewList" type="submit">Create</button>
+    </form>
+      <%} else { %>
+      <h3 style="display: none;"></h3>
+      <% } %>
+
+    
+
+<%- include('./partials/footer.ejs') %>
+<%- include('./partials/scripts.ejs') %>

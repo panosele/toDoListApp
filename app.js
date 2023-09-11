@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 import sqlite3 from 'sqlite3';
 sqlite3.verbose();
-import {getRecords, insertNewList, deleteList} from './utils.js';
+import {getRecords, insertNewList, deleteList, createNewListTable, deleteListTable} from './utils.js';
 
 // let db = new sqlite3.Database('./db/taskLists.db');
 
@@ -62,9 +62,16 @@ app.get("/create/newList", (req,res)=>{
   res.render("new_list")
 })
 
-app.get("/:list", (req, res)=>{
+app.get("/:list", async (req, res)=>{
     // res.render(`./${req.params.list}`)
-    res.render("list", {content: req.params.list});
+    let listname = req.params.list.slice(1)
+    console.log(listname)
+    let sql = `SELECT task FROM ${listname}`;
+    let allTasks = await getRecords(sql);
+    console.log(allTasks)
+    
+
+    res.render("list", {content: allTasks, listName: listname.toUpperCase()});
   })
 
 
@@ -77,6 +84,9 @@ app.post("/create/newList", async (req, res)=>{
   let sqlLists = `SELECT name FROM taskLists`;
   let allLists = await getRecords(sqlLists);
   let newId = allLists.length + 1;
+  //CREATE THE NEW LIST
+  let sqlCreateList = `CREATE TABLE ${newName} (${newName}id NUMBER PRIMARY KEY, task TEXT)`
+  let resultNewList = await createNewListTable(sqlCreateList);
   
   let sql = `INSERT INTO taskLists(id, name) VALUES (${newId}, "${newName}")`
   let result = await insertNewList(sql);
@@ -88,15 +98,46 @@ app.post("/create/newList", async (req, res)=>{
 //DELETE EXISTING LIST
 app.post("/delete/list", async (req,res)=>{
   let listToDelete = req.body.deleteList;
-  
+  //DELETE FROM LISTS
   let sql = `DELETE FROM taskLists WHERE name= "${listToDelete}"`;
   let result = await deleteList(sql);
   console.log(result);
+  //DELETE THE EXISTING TABLE OF LIST
+  let sqlDeleteListTable = `DROP TABLE ${listToDelete}`
+  let resultDeleteList = await deleteListTable(sqlDeleteListTable);
 
   res.redirect("/");
 })
 
+// TASKS OF LIST
+app.get("/:list/create/newTask", (req,res)=>{
+  let listName = req.params.list.slice(1)
+  res.render("new_task", {content: listName})
+})
+
+app.post("/:list/create/newTask",async (req,res)=>{
+  let newTask = req.body.task;
+  let listName = req.params.list
+  // newName = newName.toLowerCase();
+  console.log(newTask);
+  console.log(listName);
+  //Retrieve lengthofLists
+  let sqlLists = `SELECT task FROM ${listName}`;
+  let allLists = await getRecords(sqlLists);
+  let newId = allLists.length + 1;
+  
+  let sql = `INSERT INTO ${listName}(${listName}id, task) VALUES (${newId}, "${newTask}")`
+  let result = await insertNewList(sql);
+  console.log(result)
+
+  res.redirect(`/:${listName}`)
+})
+
 //CONTACT FORM
+app.get("/contact/form", (req,res)=>{
+  res.render("contact")
+})
+
 app.post("/contact", async (req,res)=>{
   console.log(req.body)
   let content = "Thank you for your contact. We will reach to you as soon as possible!"

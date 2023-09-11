@@ -39,4 +39,27 @@ export function deleteList(sql){
     })
 }
 
+export function createNewListTable(sql){
+    return new Promise(resolve=>{
+        db.run(sql, (err)=>{
+            if (err){
+                return console.error(err.message)
+            }else{
+                resolve("New table created succesfully")
+            }
+        })
+    })
+}
+
+export function deleteListTable(sql){
+    return new Promise(resolve=>{
+        db.run(sql, (err)=>{
+            if (err){
+                return console.error(err.message)
+            }else{
+                resolve("Existing table deleted succesfully")
+            }
+        })
+    })
+}
 

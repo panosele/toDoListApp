@@ -1,10 +1,26 @@
 <%- include('./partials/links.ejs') %>
 <%- include('./partials/navbar.ejs') %>
 
-    <h1>LIST NAME</h1>
-
+    
+      
     <% if (locals.content) { %>
-      <h3> <%= content %></h3>
+      <h1><%= listName %></h1>
+      <div id="container">
+        <div id="listsContainer">
+          
+          <% content.forEach((list)=>{ %>
+            
+            <a href="/:<%= list %>"><%= list %></a>
+            
+            <form action="/delete/list" id="contactform" class="form" method="POST">
+              <input class="hiddenInput" type="text" name="deleteList" value="<%= list %>"/>
+              <button style="background-color: rgb(42, 192, 62); margin-bottom: 10px;">☑</button>
+            </form>
+          <% }) %>
+          <a id="import-new-list" href=":<%= listName.toLowerCase() %>/create/newTask">+</a>
+        </div>
+        
+        </div>
       <%} else { %>
       <h3 style="display: none;"></h3>
       <% } %>

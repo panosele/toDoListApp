@@ -5,6 +5,11 @@ html{
     background-color: rgb(170, 235, 202);
 }
 
+h2{
+    text-align: center;
+    color: blue;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -43,11 +48,7 @@ body{
     background-color: antiquewhite;
 }
 
-#listContainer{
-    display: flex;
-    flex-direction: row;
-    
-}
+
 
 #listsContainer a{
     text-decoration: none;
