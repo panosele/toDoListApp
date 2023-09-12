@@ -6,14 +6,19 @@
     <% if (locals.content) { %>
       <h1><%= listName %></h1>
       <div id="container">
+        <div id="backgroundImage">
+
+        </div>
+
         <div id="listsContainer">
           
-          <% content.forEach((list)=>{ %>
+          <% content.forEach((task)=>{ %>
             
-            <a href="/:<%= list %>"><%= list %></a>
+            <a id="listHeaderName" href="/:<%= listName %>"><%= task %></a>
             
-            <form action="/delete/list" id="contactform" class="form" method="POST">
-              <input class="hiddenInput" type="text" name="deleteList" value="<%= list %>"/>
+            <form action="/delete/task" id="contactform" class="form" method="POST">
+              <input class="hiddenInput" type="text" name="deleteList" value="<%= listName %>"/>
+              <input class="hiddenInput" type="text" name="deleteTask" value="<%= task %>"/>
               <button style="background-color: rgb(42, 192, 62); margin-bottom: 10px;">☑</button>
             </form>
           <% }) %>

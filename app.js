@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 import sqlite3 from 'sqlite3';
 sqlite3.verbose();
-import {getRecords, insertNewList, deleteList, createNewListTable, deleteListTable} from './utils.js';
+import {getRecords, getTasks, insertNewList, deleteList, createNewListTable, deleteListTable} from './utils.js';
 
 // let db = new sqlite3.Database('./db/taskLists.db');
 
@@ -67,7 +67,7 @@ app.get("/:list", async (req, res)=>{
     let listname = req.params.list.slice(1)
     console.log(listname)
     let sql = `SELECT task FROM ${listname}`;
-    let allTasks = await getRecords(sql);
+    let allTasks = await getTasks(sql);
     console.log(allTasks)
     
 
@@ -85,14 +85,14 @@ app.post("/create/newList", async (req, res)=>{
   let allLists = await getRecords(sqlLists);
   let newId = allLists.length + 1;
   //CREATE THE NEW LIST
-  let sqlCreateList = `CREATE TABLE ${newName} (${newName}id NUMBER PRIMARY KEY, task TEXT)`
+  let sqlCreateList = `CREATE TABLE ${newName} (${newName}id INTEGER PRIMARY KEY AUTOINCREMENT, task TEXT)`
   let resultNewList = await createNewListTable(sqlCreateList);
   
-  let sql = `INSERT INTO taskLists(id, name) VALUES (${newId}, "${newName}")`
+  let sql = `INSERT INTO taskLists(name) VALUES ("${newName}")`
   let result = await insertNewList(sql);
   console.log(result)
 
-  res.render("new_list", {content: result})
+  res.redirect("/")
 })
 
 //DELETE EXISTING LIST
@@ -131,6 +131,21 @@ app.post("/:list/create/newTask",async (req,res)=>{
   console.log(result)
 
   res.redirect(`/:${listName}`)
+})
+
+// DELETING EXISTING TASK
+//DELETE EXISTING LIST
+app.post("/delete/task", async (req,res)=>{
+  let listToDelete = await req.body.deleteList;
+  let taskToDelete = await req.body.deleteTask;
+  console.log(listToDelete);
+  console.log(taskToDelete);
+  //DELETE FROM LISTS
+  let sql = `DELETE FROM ${listToDelete} WHERE task= "${taskToDelete}"`;
+  let result = await deleteList(sql);
+  console.log(result);
+  
+  res.redirect("/");
 })
 
 //CONTACT FORM

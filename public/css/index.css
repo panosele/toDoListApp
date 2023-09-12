@@ -13,18 +13,21 @@ h2{
 body{
     margin: 0;
     padding: 0;
-    background-color: rgb(170, 235, 202);
+    background-color: rgb(170, 235, 202)!important;
 }
+
 
 #backgroundImage{
     min-height: 500px;
-    min-width: 100%;
+    min-width: 50%;
     background-image: url("../images/index_bouckground.jpg");
     background-repeat:no-repeat;
     background-position: center;
     background-size: auto 100%;
     background-color: rgb(170, 235, 202);
-    margin-top: 150px;
+    
+    padding-top: 100px;
+    border-radius: 20%;
 }
 
 #container{
@@ -32,20 +35,22 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     margin: 0;
-    padding: 0;
+    padding: 80px;
 }
 
 #listsContainer{
     margin: 30px auto;
-    min-width: 250px;
-    max-width: 1000px;
+    min-width: 500px;
+    padding: 50px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: antiquewhite;
+    background-color: rgb(163, 70, 124);
+    border-radius: 10%;
 }
 
 
@@ -56,10 +61,24 @@ body{
     padding: 20px;
     border-style:groove;
     border-color: rgb(61, 57, 57);
-    width: 100%;
+    background-color: azure;
+    min-width: 60%;
     color: black;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    font-weight:500 ;
 }
+
+#listsContainer a:hover{
+    background-color: green;
+    color: azure;
+}
+
+#doneButton:hover{
+    background-color: red;
+    color: black;
+}
+
+
 
 #listsContainer input{
     margin-right: 30px;
@@ -82,3 +101,5 @@ body{
 .hiddenInput{
     display: none;
 }
+
+

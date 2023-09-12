@@ -16,6 +16,21 @@ export function getRecords(sql){
     });
 };
 
+export function getTasks(sql){
+    let data = [];
+    return new Promise(resolve=>{
+        db.all(sql,[],(err,rows)=>{
+            if(err){
+                return console.error(err.message);
+            }
+            rows.forEach((row)=>{
+                data.push(row.task);
+            });
+            resolve(data);
+        });
+    });
+};
+
 export function insertNewList(sql){
     console.log(sql);
     return new Promise(resolve=>{

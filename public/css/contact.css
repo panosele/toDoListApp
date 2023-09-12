@@ -1,6 +1,11 @@
 h1{
     margin: 100px 50px 15px;
     padding-top: 100px;
+    padding-bottom: 30px;
+    background-color: rgb(76, 160, 118);
+    text-align: center;
+    color: black;
+    font-weight: 600;
 }
 
 h3{

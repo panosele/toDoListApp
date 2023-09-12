@@ -8,14 +8,23 @@
       <%} else { %>
       <h3 style="display: none;"></h3>
       <% } %>
+    
 
-    <form  action="/contact" id="contactform" class="form" method="POST">
-      <input class="name child" type="text" placeholder="Name" name="name" maxlength="20"  required/>
-      <input class="surname child" type="text" placeholder="Surname" name="surname" maxlength="20"  required/>
-      <input class="email child" type="email" placeholder="Email" name="email" required/>
-      <textarea class="message child" type="text" placeholder="message" name="message" maxlength="1000" form="contactform" rows="10" required></textarea>>
-      <button type="submit child">Send</button>
-    </form>
+      <div id="container">
+
+      <div id="backgroundImage"></div>
+
+        <div id="listsContainer">
+          <form  action="/contact" id="contactform" class="form" method="POST">
+            <input class="name child" type="text" placeholder="Name" name="name" maxlength="20"  required/>
+            <input class="surname child" type="text" placeholder="Surname" name="surname" maxlength="20"  required/>
+            <input class="email child" type="email" placeholder="Email" name="email" required/>
+            <textarea class="message child" type="text" placeholder="message" name="message" maxlength="1000" form="contactform" rows="10" required></textarea>>
+            <button type="submit child">Send</button>
+          </form>
+        </div>
+        
+      </div>
 
     
 
