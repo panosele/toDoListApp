@@ -65,12 +65,10 @@ app.get("/create/newList", (req,res)=>{
 app.get("/:list", async (req, res)=>{
     // res.render(`./${req.params.list}`)
     let listname = req.params.list.slice(1)
-    console.log(listname)
+    
     let sql = `SELECT task FROM ${listname}`;
     let allTasks = await getTasks(sql);
-    console.log(allTasks)
     
-
     res.render("list", {content: allTasks, listName: listname.toUpperCase()});
   })
 
@@ -79,18 +77,15 @@ app.get("/:list", async (req, res)=>{
 app.post("/create/newList", async (req, res)=>{
   let newName = req.body.name;
   newName = newName.toLowerCase();
-  console.log(newName);
   //Retrieve lengthofLists
   let sqlLists = `SELECT name FROM taskLists`;
   let allLists = await getRecords(sqlLists);
-  let newId = allLists.length + 1;
   //CREATE THE NEW LIST
   let sqlCreateList = `CREATE TABLE ${newName} (${newName}id INTEGER PRIMARY KEY AUTOINCREMENT, task TEXT)`
   let resultNewList = await createNewListTable(sqlCreateList);
   
   let sql = `INSERT INTO taskLists(name) VALUES ("${newName}")`
   let result = await insertNewList(sql);
-  console.log(result)
 
   res.redirect("/")
 })
@@ -101,7 +96,6 @@ app.post("/delete/list", async (req,res)=>{
   //DELETE FROM LISTS
   let sql = `DELETE FROM taskLists WHERE name= "${listToDelete}"`;
   let result = await deleteList(sql);
-  console.log(result);
   //DELETE THE EXISTING TABLE OF LIST
   let sqlDeleteListTable = `DROP TABLE ${listToDelete}`
   let resultDeleteList = await deleteListTable(sqlDeleteListTable);
@@ -118,9 +112,6 @@ app.get("/:list/create/newTask", (req,res)=>{
 app.post("/:list/create/newTask",async (req,res)=>{
   let newTask = req.body.task;
   let listName = req.params.list
-  // newName = newName.toLowerCase();
-  console.log(newTask);
-  console.log(listName);
   //Retrieve lengthofLists
   let sqlLists = `SELECT task FROM ${listName}`;
   let allLists = await getRecords(sqlLists);
@@ -128,24 +119,21 @@ app.post("/:list/create/newTask",async (req,res)=>{
   
   let sql = `INSERT INTO ${listName}(${listName}id, task) VALUES (${newId}, "${newTask}")`
   let result = await insertNewList(sql);
-  console.log(result)
 
   res.redirect(`/:${listName}`)
 })
 
 // DELETING EXISTING TASK
-//DELETE EXISTING LIST
+
 app.post("/delete/task", async (req,res)=>{
   let listToDelete = await req.body.deleteList;
   let taskToDelete = await req.body.deleteTask;
-  console.log(listToDelete);
-  console.log(taskToDelete);
   //DELETE FROM LISTS
   let sql = `DELETE FROM ${listToDelete} WHERE task= "${taskToDelete}"`;
   let result = await deleteList(sql);
   console.log(result);
   
-  res.redirect("/");
+  res.redirect(`/:${listToDelete}`);
 })
 
 //CONTACT FORM
